@@ -1,0 +1,153 @@
+
+ html {
+    font-weight: lighter;
+    outline: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+h1 {
+    margin: 0;
+}
+button {
+    width: 71%;
+    border-radius: 50px;
+    
+}
+input {
+    border-radius: 50px;
+    outline: none;
+    width: 70%;
+    transition: .3s;
+    padding: 15px 10px 15px 30px;
+}
+
+
+.Email{
+      min-width: 400px;
+      outline: none;
+      background-color: rgba(255, 255, 255, 0.5);
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 3px 6px rgba(82, 80, 80, 0.5);
+      text-align:center;
+      margin-top:4%;
+      height:80%;
+      width: 33%;
+      border:1px solid grey;
+  }
+  
+ 
+ #msqExam{
+
+  color:rgb(66, 66, 66);
+  font-size: 25px;
+  text-shadow: 2px 2px gray;          
+ }
+
+#container{
+    margin-top:-6.5%; 
+}
+#account{
+    margin-top:10%;
+}
+  #username{
+    border: solid grey 1px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size:13px;
+  }
+
+
+  #userpassword{
+    border: solid grey 1px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 13px;
+  }
+
+  /* #button{
+    margin-top:45px;
+    font-size:large;
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 6px;
+    margin: 8px 0;
+    border: 1px;
+    border-radius:10px;
+    cursor: pointer;
+    width: 50%; 
+  } */
+
+  #button:hover {
+  opacity: 0.8;
+  }
+
+
+  .imgcontainer {
+    background-color: rgba(248, 248, 248, 0.5);
+    text-align: center;
+    padding: 20px;
+}
+
+  img.avatar {
+  width:auto;
+  height: auto;
+  border-radius: 50%;
+  }
+
+  #login {
+    margin-top:45px;
+    font-size:large;
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 6px;
+    margin: 8px 0;
+    border: 1px;
+    cursor: pointer;
+  }
+  
+
+  @media screen and (max-device-width:1240px) {
+      img.avatar {
+          width: auto;
+          height: auto;
+      }
+      
+      #imageSrc {
+          width: auto;
+          height: auto;
+      }
+
+    #username{
+        padding:5px 8px;
+        font-size:10px;
+    }
+    #userpassword{
+        padding:5px 8px;
+        font-size:10px;
+    }
+    #login{
+        padding:5px 8px;
+        font-size:10px;
+    }
+
+    #account{
+        font-size:10px;
+    }
+ 
+      .Email{
+          margin:20px;
+          min-width: auto;
+          width:auto;
+          height:auto;
+      }
+       
+      #msqExam{
+        font-size:10px;
+          text-shadow: 1px 1px gray;   
+      }
+     
+ }
