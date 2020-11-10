@@ -7,9 +7,11 @@ const cors = require("cors")
 const app = express();
 const uri = "mongodb+srv://raymondjay:iamlegendary11@cluster0.h2o1d.mongodb.net/dbCollection?retryWrites=true&w=majority";
 var currentUser = ""
+var userId = ""
 var mongoCollection = "";
 var score = "";
 var Account = "";
+var newUser;
 
 app.use(cors())
 app.use(express.json())
@@ -26,7 +28,23 @@ mongoose.connect(uri, (err, db) => {
 })
 
 app.get('/currentUser', (req, res) => {
-    res.send({name: currentUser})
+    res.send({name: currentUser, id: userId})
+})
+
+app.post('/updateUserInfo', (req, res) => {
+    let newValue = {fullname: req.body.fullname, company: req.body.company, username: req.body.username, password: req.body.password, email: req.body.email, contactNumber: req.body.contactNumber};
+    console.log(newValue)
+    Account.deleteOne({_id: ObjectId(req.body._id)}).then((result) => {
+        Account.insertOne(newValue, (err, result) => {
+            res.send(result)
+        })
+    })
+})
+
+app.post('/currentUserInfo', (req, res) => {
+    Account.find({_id: ObjectId(req.body.name)}).toArray((err, result) => {
+        res.send(result)
+    })
 })
 
 app.get('/', (req, res) => {
@@ -71,6 +89,15 @@ app.delete("/deleteAnswer/:id", (req, res) => {
         res.send(true)
 })
 
+app.get('/deleteUser/:id', (req, res) => {
+    Account.deleteOne({_id: ObjectId(req.params.id)}).then((result) => {
+        res.send(true)
+    })
+    .catch((err) => {
+        res.send(false)
+    })
+})
+
 app.post("/updateScore", (req, res) => {
     const query = { "dataid": req.body.dataid };
 
@@ -109,12 +136,12 @@ app.post("/register", (req, res) => {
 })
 
 app.post("/login", (req, res) => {
-    currentUser = req.body.username
     var token = ""
     const query = { "username": req.body.username, "password": req.body.password };
-    //const projection = {"username": req.body.username};
     return Account.findOne(query)
         .then(result => {
+            currentUser = result.fullname
+            userId = result._id
             token = generateToken.generateJWT(result)
             res.send({success: true ,token: token})
         })
