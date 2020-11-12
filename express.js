@@ -11,7 +11,8 @@ var userId = ""
 var mongoCollection = "";
 var score = "";
 var Account = "";
-var newUser;
+var sendEmail = require("./sendEmail.js")
+var addingNewUser = require("./permissionToAddUserEmail.js")
 
 app.use(cors())
 app.use(express.json())
@@ -27,13 +28,28 @@ mongoose.connect(uri, (err, db) => {
     }
 })
 
+app.post('/recoverPassword', (req, res) => {
+    Account.findOne({username: req.body.username}).then((result) => {
+        if(!result) {
+            res.send(false)
+        }else {
+            sendEmail(result)
+            res.send(true)
+        }
+    })
+})
+
+app.post('/askToAddUser', (req, res) => {
+    addingNewUser(req.body)
+    res.send(true)
+})
+
 app.get('/currentUser', (req, res) => {
     res.send({name: currentUser, id: userId})
 })
 
 app.post('/updateUserInfo', (req, res) => {
     let newValue = {fullname: req.body.fullname, company: req.body.company, username: req.body.username, password: req.body.password, email: req.body.email, contactNumber: req.body.contactNumber};
-    console.log(newValue)
     Account.deleteOne({_id: ObjectId(req.body._id)}).then((result) => {
         Account.insertOne(newValue, (err, result) => {
             res.send(result)
@@ -74,7 +90,6 @@ app.post("/AddScore", (req, res) => {
     })
 })
 app.delete("/deleteScore", (req, res) => {
-    console.log(req.body.dataid)
     const dels = { "dataid": req.body.dataid };
     score.deleteOne(dels).then((result) => 
         console.log(`Deleted Score:${result.deletedCount} item.`)).catch(err => console.error(`Delete failed with error: ${err}`))
@@ -82,7 +97,6 @@ app.delete("/deleteScore", (req, res) => {
 })
 
 app.delete("/deleteAnswer/:id", (req, res) => {
-    console.log(req.params.id)
     const del = { _id: ObjectId(req.params.id) };
     mongoCollection.deleteOne(del).then(result => 
         console.log(`Deleted Person ${result.deletedCount} item.`)).catch(err => console.error(`Delete failed with error: ${err}`))
